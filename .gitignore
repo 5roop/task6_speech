@@ -18,6 +18,9 @@ __pycache__/
 # VSCode stuff:
 .vscode/
 
+# CHecpoints
+**checkpoint**
+
 # Distribution / packaging
 .Python
 build/
