@@ -20,3 +20,17 @@ The vocabulary found in the normalized transcripts is as follows: `{' ', '*', ':
 
 I noticed that the substitutions take a long time. It might be better to do it in `pandas` in the future.
 
+I performed a train-test split randomly without setting the random seed. Train size was set to 0.8, meaning that 18430 instances were in the training split and 4608 were in the test split.
+
+
+# Addendum 2021-12-03T14:04:13
+
+The model would not train due to CUDA Out of memory errors. My usual trick `import torch;torch.cuda.empty_cache()` did not work and the `nvidia-smi` output showed there was still a lot of memory allocated to my processes. Fortunately this error is so ubiquitous that I found another approach:
+```
+from numba import cuda
+cuda.select_device(0)
+cuda.close()
+cuda.select_device(0)
+```
+
+This successfully released CUDA memory. Training is done via the Trainer module, but for some unknown reason every time the training starts, something stalls the process for about 10-15 minutes, and then the training either starts or crashes, meaning that debugging is time-consuming. It also means that the README will probably be bloated again, because it gives me time to complain and log all difficulties and attempted fixes.
