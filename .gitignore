@@ -21,6 +21,9 @@ __pycache__/
 # CHecpoints
 **checkpoint**
 
+# Data
+data/
+
 # Distribution / packaging
 .Python
 build/
