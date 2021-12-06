@@ -37,4 +37,15 @@ This successfully released CUDA memory. Training is done via the Trainer module,
 
 # Addendum 2021-12-03T17:07:06
 
-It had been discovered that none of the tricks prevent the training from crashing. To explore further I first dropped the number of `per_device_train_batch_size` to 4, but to no avail. In the next step I only read 10k instances. It did not work. With the reduced dataset I proceeded to further reduce the batch size to 1. This worked. I therefore increased the batch size to 2 and tried again. If this works, the dataset will be expanded to use full data. 
+It had been discovered that none of the tricks prevent the training from crashing. To explore further I first dropped the number of `per_device_train_batch_size` to 4, but to no avail. In the next step I only read 10k instances. It did not work. With the reduced dataset I proceeded to further reduce the batch size to 1. This worked. I therefore increased the batch size to 2 and tried again. If this works, the dataset will be expanded to use full data. It did not.
+
+# Addendum 2021-12-06T07:40:36
+To get it to work I clipped the audios as demonstrated in the example:
+```python
+max_input_length_in_sec = 5.0
+train = train.filter(lambda x: x < max_input_length_in_sec * processor.feature_extractor.sampling_rate, input_columns=["input_length"])
+```
+The batch size was 2 and the first training episode ran OK with 2.5 it/s. Unfortunately the evaluation was way slower and crashed at the very end:
+```ValueError: number of ground truth inputs (24) and hypothesis inputs (0) must match```
+
+
