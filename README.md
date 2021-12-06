@@ -57,3 +57,33 @@ Current speed is about 0.2 it/s when training and 0.5 it/s when evaluating. Per 
 # Addendum 2021-12-06T13:28:12
 
 First and second evaluations inspire hope: WER 0.43 and 0.30. Total training time seem to will have been about 3h.
+
+To do: implement filtering in the dataset construction part to allow for more elegant choice of input lengths.
+
+File sizes in kB are distributed as follows:
+
+```
+      ┌──────────────────────────────────────────────────────────────────────┐
+  2072┤ █                                                                    │
+      │ █                                                                    │
+1727.0┤▐█▄                                                                   │
+      │▐██▙▖                                                                 │
+      │▐███▌                                                                 │
+      │▐████▌                                                                │
+1381.0┤▐████▌                                                                │
+      │▐████▙▖                                                               │
+  1036┤▐█████▙▄                                                              │
+      │▐███████                                                              │
+      │▐███████▌                                                             │
+      │▐█████████                                                            │
+ 691.0┤██████████▄▖                                                          │
+      │███████████▙                                                          │
+      │████████████▙▖                                                        │
+ 345.0┤█████████████▙▄▖                                                      │
+      │█████████████████▄▖                                                   │
+     0┤█████████████████████▟▙▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▗▄▖▗▖ ▄▄ ▗▖                ▄│
+      └┬─────┬─────┬─────┬─────┬──────┬──────┬──────┬──────┬──────┬──────┬───┘
+      18.8 342.0 630.0 954.0 1241.0 1601.0 1961.0 2320.0 2680.0 3039.0 3399.0
+```
+
+1200kB means length of about 31s, which means I can probably discard everything after 1000kB and hardly change the dataset size and hopefully keep the pipeline from crashing.
