@@ -37,4 +37,4 @@ This successfully released CUDA memory. Training is done via the Trainer module,
 
 # Addendum 2021-12-03T17:07:06
 
-It had been discovered that none of the tricks prevent the training from crashing. To explore further I first dropped the number of `per_device_train_batch_size` to 4, but to no avail. In the next step I only read 10k instances. Results are not yet clear.
+It had been discovered that none of the tricks prevent the training from crashing. To explore further I first dropped the number of `per_device_train_batch_size` to 4, but to no avail. In the next step I only read 10k instances. It did not work. With the reduced dataset I proceeded to further reduce the batch size to 1. This worked. I therefore increased the batch size to 2 and tried again. If this works, the dataset will be expanded to use full data. 
