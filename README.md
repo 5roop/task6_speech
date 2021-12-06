@@ -48,4 +48,8 @@ train = train.filter(lambda x: x < max_input_length_in_sec * processor.feature_e
 The batch size was 2 and the first training episode ran OK with 2.5 it/s. Unfortunately the evaluation was way slower and crashed at the very end:
 ```ValueError: number of ground truth inputs (24) and hypothesis inputs (0) must match```
 
+I opened a new notebook and repeated the pipeline again in case I missed some steps. It seemed the training was even slower this time somehow... I clipped all instances at 20s and set the train batch size at 2. The problem now arises at the evaluation stage. For some reason there is a ValueError raised at the point of evaluation:
 
+```ValueError: number of ground truth inputs (366) and hypothesis inputs (0) must match.```
+
+The weird thing is that the error gets raised at the very end of the evaluation. Probably this means that the speech2text works and only the evaluation crashes.
