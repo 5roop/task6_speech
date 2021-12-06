@@ -53,3 +53,7 @@ I opened a new notebook and repeated the pipeline again in case I missed some st
 I tried rerunning the training pipeline with CER metric disabled, with a reduced dataset that only reads 2k files. That seemed to work, so I proceeded with training on the full dataset. For now I still have the length clipped at 5s.
 
 Current speed is about 0.2 it/s when training and 0.5 it/s when evaluating. Per device train batch size was increased to 16.
+
+# Addendum 2021-12-06T13:28:12
+
+First and second evaluations inspire hope: WER 0.43 and 0.30. Total training time seem to will have been about 3h.
