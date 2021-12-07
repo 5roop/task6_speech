@@ -116,3 +116,9 @@ I therefore opt to first load the model from yesterday and evaluate it on the te
 I added an evaluation run that loaded the model from the disk, loaded dataset, and ground truths. Unfortunately, the behaviour was not stable enough to allow for transciption of the whole test dataset, I started getting RuntimeErrors due to Cuda OOM after a bit more than 500 instances.
 
 Nota: The test dataset is not the same as the one used when training, as that one was lost due to disk errors stopping the pipeline. The instances could therefore be trained upon. This eval run should mostly be used as an inspection for possible suspicious behaviours discovered in the model.
+
+I noticed that I don't really need CUDA to run the evaluation. With a few deletions I managed to get the evaluation to run waay longer than before. Why a simple evaluation reserved 30GB for pytorch, I still don't know.
+
+I noticed that raw evaluation took a loong time, meaning that apparently the evaluation during training was faster in comparison with this.
+
+When finished I prepare a new notebook for repeated training. This time I will try and use 30s of clips, which will cover the vast majority of data.
