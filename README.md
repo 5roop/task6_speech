@@ -110,3 +110,9 @@ A similar histogram can also be plotted for word count and we find they are quit
 I had a mad dream that I would let the model train on 30s data during the night. Unfortunately the diskspace got so full that not only did the training fail, open files were corrupted and manual recovery was needed to get them back.
 
 I therefore opt to first load the model from yesterday and evaluate it on the test data. A new notebook shall be opened for this purpose.
+
+# Addendum 2021-12-07T09:24:56
+
+I added an evaluation run that loaded the model from the disk, loaded dataset, and ground truths. Unfortunately, the behaviour was not stable enough to allow for transciption of the whole test dataset, I started getting RuntimeErrors due to Cuda OOM after a bit more than 500 instances.
+
+Nota: The test dataset is not the same as the one used when training, as that one was lost due to disk errors stopping the pipeline. The instances could therefore be trained upon. This eval run should mostly be used as an inspection for possible suspicious behaviours discovered in the model.
