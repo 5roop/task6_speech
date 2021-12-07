@@ -58,6 +58,14 @@ Current speed is about 0.2 it/s when training and 0.5 it/s when evaluating. Per 
 
 First and second evaluations inspire hope: WER 0.43 and 0.30. Total training time seem to will have been about 3h.
 
+Training stats: 
+Step	Training Loss	Validation Loss	Wer
+400	3.309800	inf	0.438042
+800	0.459100	inf	0.300283
+1200	0.215900	inf	0.282470
+1600	0.107500	inf	0.257122
+2000	0.058700	inf	0.245714
+
 To do: implement filtering in the dataset construction part to allow for more elegant choice of input lengths.
 
 File sizes in kB are distributed as follows:
@@ -90,3 +98,8 @@ File sizes in kB are distributed as follows:
 1200kB means length of about 31s, which means I can probably discard everything after 1000kB and hardly change the dataset size and hopefully keep the pipeline from crashing.
 
 So far the automatic checkpoint deletion works like a charm.
+
+A similar histogram can also be plotted for word count and we find they are quite similar:
+
+![](images/histogram.png)
+
