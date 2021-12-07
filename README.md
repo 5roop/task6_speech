@@ -121,7 +121,7 @@ I noticed that I don't really need CUDA to run the evaluation. With a few deleti
 
 I noticed that raw evaluation took a loong time, meaning that apparently the evaluation during training was faster in comparison with this.
 
-When finished I prepare a new notebook for repeated training. This time I will try and use 30s of clips, which will cover the vast majority of data.
+When finished I prepare a new notebook for repeated training. Unlimited inputs crashed the training. This time I will try and use 30s of clips, which will cover the vast majority of data.
 
 # Addendum 2021-12-07T14:32:33
 As it turns out, this is a major obstacle. The training speed dropped to 0.1 it/s, the progress bar says the total training time will be over 30h. But it does run! To prove it right I will wait a bit and then decide what to do.
