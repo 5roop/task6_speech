@@ -103,3 +103,10 @@ A similar histogram can also be plotted for word count and we find they are quit
 
 ![](images/histogram.png)
 
+
+
+# Addendum 2021-12-07T07:56:20
+
+I had a mad dream that I would let the model train on 30s data during the night. Unfortunately the diskspace got so full that not only did the training fail, open files were corrupted and manual recovery was needed to get them back.
+
+I therefore opt to first load the model from yesterday and evaluate it on the test data. A new notebook shall be opened for this purpose.
