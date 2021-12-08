@@ -137,3 +137,5 @@ Clipping audio at 30s did not work, but I managed to train the model about 15 ep
 | 1600 | 0.183300      | inf             | 0.181068 |
 | 2000 | 0.147100      | inf             | 0.177198 |
 | 2400 | 0.120200      | inf             | 0.167918 |
+
+I retain the last checkpoint, meaning that even with the interrupted training I can continue to build on the shoulders of the half-finished giant that crashed.
