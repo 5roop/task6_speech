@@ -138,7 +138,7 @@ Clipping audio at 30s did not work, but I managed to train the model about 15 ep
 | 2000 | 0.147100      | inf             | 0.177198 |
 | 2400 | 0.120200      | inf             | 0.167918 |
 
-I retain the last checkpoint, meaning that even with the interrupted training I can continue to build on the shoulders of the half-finished giant that crashed.
+I retain the last checkpoint, meaning that even with the interrupted training I can continue to build on the shoulders of the half-finished giant that crashed. *Tried that, could not get it to train properly.*
 
 ## Alignment
 
@@ -154,3 +154,5 @@ I retain the last checkpoint, meaning that even with the interrupted training I 
 I found a fork of `aeneas` that works. The nontrivial part of next steps is splitting the sentences in a meaningful way. Normalized sentences contain no punctuation or capitalization, especially due to the origin of the data, reading them is like reading James Joyce.
 
 In a first attempt I created a text transcript, where I replaced every 10-th space with a newline character. I ran `aeneas ` on my laptop and found that it even supports Croatian language. The troubling part however, is that there are some parts of the transcripts that have zero length. I shall investigate those manually to discern what is going on.
+
+It seems that the aligner reads the duration correctly, but especially in the end part of the audio file the alignments are pretty much useless. In the beginning part, the transcripts are longer than they really are in the audio file (e.g. 15s segment is labeled as being 18.4 seconds long.)
