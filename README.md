@@ -139,3 +139,11 @@ Clipping audio at 30s did not work, but I managed to train the model about 15 ep
 | 2400 | 0.120200      | inf             | 0.167918 |
 
 I retain the last checkpoint, meaning that even with the interrupted training I can continue to build on the shoulders of the half-finished giant that crashed.
+
+## Alignment
+
+* `afalinger` and `aeneas`: would not pip install. There is a really convoluted option for installing in a virtual machine, but I hope to avoid that. There is a bunch of gcc errors that for now I cannot get rid of.
+* `align` installs, has shitty docs. Is not intended for audio-text alignment, but for comparing two transcripts.
+* `pyfoal`: installation OK. Can't get it to work. I solved one problem (calling shell command HCopy instead of hcopy from a package I hadn't installed previously), but now it wants to call HVite, which is unclear what it is and does.
+* `FAVE-align`: expects not only text, but speaker ID, names, breath groups, and finally also text. Convoluted, to say the least.
+* 
