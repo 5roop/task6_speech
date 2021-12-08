@@ -146,4 +146,11 @@ I retain the last checkpoint, meaning that even with the interrupted training I 
 * `align` installs, has shitty docs. Is not intended for audio-text alignment, but for comparing two transcripts.
 * `pyfoal`: installation OK. Can't get it to work. I solved one problem (calling shell command HCopy instead of hcopy from a package I hadn't installed previously), but now it wants to call HVite, which is unclear what it is and does.
 * `FAVE-align`: expects not only text, but speaker ID, names, breath groups, and finally also text. Convoluted, to say the least.
-* 
+
+
+
+# Addendum 2021-12-08T10:25:38
+
+I found a fork of `aeneas` that works. The nontrivial part of next steps is splitting the sentences in a meaningful way. Normalized sentences contain no punctuation or capitalization, especially due to the origin of the data, reading them is like reading James Joyce.
+
+In a first attempt I created a text transcript, where I replaced every 10-th space with a newline character. I ran `aeneas ` on my laptop and found that it even supports Croatian language. The troubling part however, is that there are some parts of the transcripts that have zero length. I shall investigate those manually to discern what is going on.
