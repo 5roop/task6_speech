@@ -59,12 +59,13 @@ Current speed is about 0.2 it/s when training and 0.5 it/s when evaluating. Per 
 First and second evaluations inspire hope: WER 0.43 and 0.30. Total training time seem to will have been about 3h.
 
 Training stats: 
-Step	Training Loss	Validation Loss	Wer
-400	3.309800	inf	0.438042
-800	0.459100	inf	0.300283
-1200	0.215900	inf	0.282470
-1600	0.107500	inf	0.257122
-2000	0.058700	inf	0.245714
+| Step | Training Loss | Validation Loss | Wer      |
+| ---- | ------------- | --------------- | -------- |
+| 400  | 3.309800      | inf             | 0.438042 |
+| 800  | 0.459100      | inf             | 0.300283 |
+| 1200 | 0.215900      | inf             | 0.282470 |
+| 1600 | 0.107500      | inf             | 0.257122 |
+| 2000 | 0.058700      | inf             | 0.245714 |
 
 To do: implement filtering in the dataset construction part to allow for more elegant choice of input lengths.
 
@@ -125,3 +126,14 @@ When finished I prepare a new notebook for repeated training. Unlimited inputs c
 
 # Addendum 2021-12-07T14:32:33
 As it turns out, this is a major obstacle. The training speed dropped to 0.1 it/s, the progress bar says the total training time will be over 30h. But it does run! To prove it right I will wait a bit and then decide what to do.
+
+# Addendum 2021-12-08T07:54:27
+Clipping audio at 30s did not work, but I managed to train the model about 15 epochs at 20s. The model crashed somewhere in the middle from unknown reasons, perhaps due to my VPN resetting and dropping the Jupyter session. The metrics are optimistic:
+| Step | Training Loss | Validation Loss | Wer      |
+| ---- | ------------- | --------------- | -------- |
+| 400  | 3.254200      | inf             | 0.335134 |
+| 800  | 0.381700      | inf             | 0.203421 |
+| 1200 | 0.238100      | inf             | 0.214364 |
+| 1600 | 0.183300      | inf             | 0.181068 |
+| 2000 | 0.147100      | inf             | 0.177198 |
+| 2400 | 0.120200      | inf             | 0.167918 |
