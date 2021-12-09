@@ -156,3 +156,66 @@ I found a fork of `aeneas` that works. The nontrivial part of next steps is spli
 In a first attempt I created a text transcript, where I replaced every 10-th space with a newline character. I ran `aeneas ` on my laptop and found that it even supports Croatian language. The troubling part however, is that there are some parts of the transcripts that have zero length. I shall investigate those manually to discern what is going on.
 
 It seems that the aligner reads the duration correctly, but especially in the end part of the audio file the alignments are pretty much useless. In the beginning part, the transcripts are longer than they really are in the audio file (e.g. 15s segment is labeled as being 18.4 seconds long.)
+
+MEETING NOTES:
+* Use _my model_ to segment long instance, not `aeneas`.
+* First task: get temporal information on the transcripts
+* https://distill.pub/2017/ctc/
+* https://github.com/huggingface/transformers/issues/11307
+* Character level, starts and ends, the more information, the better. #Moreismore
+* This information should be recoverable from the prediction
+* Next task: identification of pauses, data cleaning... to be discussed in the future meetings.
+* Try to improve the speed and produce consistent behaviour; try keeping the vector size flexible.
+* How does the excess of transcripts or audio influence the performance of the model?
+
+
+# Addendum 2021-12-09T09:52:30
+
+I first implemented a word-level temporal data extractor. The results are very inspiring. I manually annotated the first `wav` file:
+
+![](7_analysis/000000001.png)
+
+The resuls agree quite nicely:
+
+| ML transcription | M:start | M:end |  H:start |   H:end  | Human transcription |
+|------------------|:-------:|:-----:|:--------:|:--------:|--------------------:|
+| poštovane        |  0.401  | 0.862 | 0.370798 | 1.112394 |           Poštovane |
+| kolegice         |   1.66  |  2.03 | 1.558234 | 2.171817 |            kolegice |
+| ikolege          |   2.13  |  2.49 | 2.171817 | 2.573514 |             kolega? |
+| zastupnici       |   2.63  |  3.33 | 2.573514 | 3.387946 |          zastupnici |
+| molio            |   4.15  |  4.33 | 4.103056 | 4.372326 |               molio |
+| bi               |   4.39  |  4.41 | 4.372326 | 4.462818 |                  bi |
+| da               |   4.49  |  4.53 | 4.462818 |  4.59966 |                  da |
+| nastavimo        |   4.61  |  5.19 |  4.59966 | 5.222071 |           nastavimo |
+| sa               |   5.31  |  5.41 | 5.222071 | 5.606112 |                  sa |
+| radom            |   6.3   |  6.68 | 6.232937 | 6.716299 |               radom |
+| sjednice         |   6.76  |  7.18 | 6.716299 | 7.310017 |            sjednice |
+
+Gold truth: `poštovane kolegice i kolege zastupnici molio bi da nastavimo sa radom sjednice `
+
+The glaring mistake is of course in row 3, i.e. `ikolege`. I heard no distinct `i` phoneme, but it makes sense for it to be there. There is also a more suble error between my annotation of `kolegice` and the start of machine annotated `ikolege`, but this is around 40 ms, which is probably lower than my annotation precision.
+
+Other than that I think this performance is amazing. Word level temporal data extraction is still possible to evaluate by hand, I doubt I will be able to process the document on phoneme level with the same certainty as I was on word level.
+
+I also wanted to transcribe the longest recording, because I know how bad it performed in `aeneas`. This was unfortunately not possible due to OOM issuses. I tried another file (`9874.flac`):
+
+![](7_analysis/00009874.png)
+
+| ML transcription | M:start | M:end |  H:start |   H:end  | Human transcription |
+|------------------|:-------:|:-----:|:--------:|:--------:|--------------------:|
+| a                | 0.382   | 0.382 | 0.288851 | 0.443237 | a                   |
+| o                | 0.482   | 0.502 | 0.443237 | 0.555291 | o                   |
+| tome             | 0.603   | 0.804 | 0.590153 | 0.971138 | tome                |
+| govori           | 1.17    | 1.41  | 1.065761 | 1.489078 | govori              |
+| itematika        | 1.47    | 2.07  | 1.533899 | 2.129032 | tematika            |
+| zbog             | 2.19    | 2.35  | 2.129032 | 2.373062 | zbog                |
+| kojeg            | 2.45    | 2.65  | 2.373062 | 2.637012 | koje                |
+| su               | 2.77    | 2.83  | 2.637012 | 2.866101 | su                  |
+| se               | 2.91    | 2.97  | 2.866101 | 3.050368 | se                  |
+| sve              | 3.05    | 3.21  | 3.050368 | 3.36412  | sve                 |
+| žalili           | 3.58    | 3.92  | 3.36412  | 3.936842 | žalili              |
+
+Gold truth: `a o tome govori i tematika zbog kojeg su se sve žalili `
+
+
+Again we see the same pathology (`itematika` and a minor mismatch with my annotations). What is interesting is that in this case we have some orphan data at the beginning of the recording, but in the transcript it is ignored.
