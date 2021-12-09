@@ -219,3 +219,31 @@ Gold truth: `a o tome govori i tematika zbog kojeg su se sve žalili `
 
 
 Again we see the same pathology (`itematika` and a minor mismatch with my annotations). What is interesting is that in this case we have some orphan data at the beginning of the recording, but in the transcript it is ignored.
+
+
+# Addendum 2021-12-09T12:35:57
+
+Next steps:
+* Prepare schema for the split-aligner and report to Nikola
+
+Split-aligner should split large files (> 20s) into managable chunks, on which transcription is to be performed, pauses should be identified and then the splitting should be performed on those pauses such that all chunks satisfy length < 20s and gold transcripts should be aligned to them. In this way we can prepare a new dataset which will not break CUDA Memory.
+
+Case study of an imaginary instance (just for illustration purposes): length is in (20s, 40s):
+```
+file:    let's imagine there is some audio here.       after a pause, some more text here, but...       there was another pause.
+time:                                                      10s                                           20s
+cuts:                                                                                                    |
+```
+If we split right at 20s, we would mangle data. Let's start with the first chunk and transcribe it, with the time information extracted as well.
+
+Based on our experiments from this morning, let's decide that we need a silence of 0.2s to _neatly_ separate two words. We might find *neat* separation by looking at the whole file in chunks with some overlap: first, we take the first 20s of data, process it, and then take chunk from 15s to 35s, process it, next from 30s to 50s... The transcripts then have to be reassembled with the cutting in mind; the times would have to be corrected for the offset and because of our definition of overlaps we would always have to correct the words at the cut with those from the next cut, as they might be mangled in the first case, but probably will not be in the second case (except if the word in question is longer than 5s, like `Supercalifragilisticexpialidocious`, and even that only takes 3s to say.)
+
+Now we should have a complete timeline of the audio recording. This was the trivial part, and now the non-trivial part: separating the recording into pieces based on the pauses between words. I propose we lower the bar incrementally: let's start first with pauses of 1s and check for those. If we can split the file on those into chunks between 20s and 10s long, we exit the algorithm. If not, we lower the separation to 0.5s and try again. We could continue either by halving the separation in every iteration or by decrementing in a decimal fashion (0.5, 0.4, 0.3, 0.2). There is no reason to expect this to work for every file we encounter, so let's reserve the right to fail if we do not find a solution.
+
+We said nothing on how to split the file based on the pauses, so let's address that now. I propose we brute force it in the following way: 
+
+Once we find the pauses on which the file should be cut, we cut it in the centre of the pause, as it is the logical thing to do.
+
+Prerequisites:
+* Duration finding for wav files
+* Elegant timebased cutting for wav files
