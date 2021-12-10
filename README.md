@@ -245,6 +245,8 @@ We said nothing on how to split the file based on the pauses, so let's address t
 
 Once we find the pauses on which the file should be cut, we cut it in the centre of the pause, as it is the logical thing to do.
 
+After the files are appropriately segmented, we assign them new portions of the gold transcripts. I propose we do that with the help of our transcripts. We know what our model outputs for the segment, and we know that it is a subset of the gold transcript. For `n` words we have two directions to trim; form the end or from the start. I coded an example function that finds the closest substring in the gold transcription. Nikola suggests using `difflib`, which is Python native, but I still have to get around the fact that the strings might be slightly different in the part where they need to match.
+
 ### Workflow:
 1. Extract durations for all files in the dataset
 2. Process those that are over 20s
@@ -260,8 +262,9 @@ Once we find the pauses on which the file should be cut, we cut it in the centre
 * Duration finding for wav files: python builtin `wave`? `pydub`?
 * Elegant timebased cutting for wav files: ditto
 * `itertools: combinations, chain`
-* surely something to help with transcripts alignment, fuzzy string matchin, levenshtein distance?
+* surely something to help with transcripts alignment, fuzzy string matching, levenshtein distance?
 
 ### Remarks:
 * `pydub` seems to be optimal choice for wav file manipulations, it allows easy extraction of data, joining it, indexing temporal data directly by milliseconds instead of sample index...
 * I think this would be a good use for `tempfile` module to neatly manage all the intermediate products.
+* If this is to be shipped, dependancies have to be as pruned as possible => maybe stick to builtin datatypes instead of for example pandas?
