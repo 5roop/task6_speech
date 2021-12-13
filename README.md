@@ -268,3 +268,22 @@ After the files are appropriately segmented, we assign them new portions of the 
 * `pydub` seems to be optimal choice for wav file manipulations, it allows easy extraction of data, joining it, indexing temporal data directly by milliseconds instead of sample index...
 * I think this would be a good use for `tempfile` module to neatly manage all the intermediate products.
 * If this is to be shipped, dependancies have to be as pruned as possible => maybe stick to builtin datatypes instead of for example pandas?
+
+
+### Notes:
+* 20s might be too long for a sequence, shoot for 5-10s for finished instances
+* Keep the data created in the proces for posterity.
+* Another approach: first identify silences, chunk on those with duration <20s, then use the model on those chunks to possibly chunk further. In this case we would not need overlap and the logic for joining the overlapping transcripts.
+* Don't reinvent the wheel with the alignment (bullet 3 from above.)
+* Naming: when chunking `0002.wav`, create `0002a.wav, 0002b.wav`... If need be, we can use lowercase and uppercase in different stages of the process.
+
+# Addendum 2021-12-13T08:13:09
+
+I calculated the duration of the instances with `scipy.io.wavfile.read` and now I can replot the histogram with the durations in seconds. Not surprisingly, the shape of the distribution is identical, which makes sense since all the files have been preprocessed to have the same framerate, therefore duration and filesize directly correlate.
+
+![](images/histogram2.png)
+
+I also recalculated how many files are over our max processing limit and found about 3000 instances are longer than that.
+
+Next step: silence finder. `pydub` offers a nice way to segment chunks based on silence, with the possibility of setting the loudness and duration of silence, but the information on the duration of the silence is lost as all that is returned are the chunks themselves. This means we will need to rethink our logic and perhaps invert the question itself: we need not think about combining pauses, we need but to decrease the minimum length of silence, until all chunks are appropriately long (between 5 and 10s.)
+
