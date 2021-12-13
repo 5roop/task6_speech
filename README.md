@@ -286,3 +286,5 @@ I calculated the duration of the instances with `scipy.io.wavfile.read` and now 
 I also recalculated how many files are over our max processing limit and found about 3000 instances are longer than that.
 
 Next step: silence finder. `pydub` offers a nice way to find chunks of silence that work pretty much like the `split_on_silence`, except that it does not return audio segments themselves, but instead only the brackets where silence is identified. We can use this to calculate the silences centroids and proceed from there with the framework we already put in place the previous week.
+
+Since the longest 
