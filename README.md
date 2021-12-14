@@ -291,3 +291,5 @@ Next step: silence finder. `pydub` offers a nice way to find chunks of silence t
 # Addendum 2021-12-14T09:07:18
 
 My splitter has been debugged so that it works as intended. The problem arises in certain instances, where the splitter has to split on 200ms pauses and check 2^23 combinations, which is slow at best. I'm looking at divide-and-concquer implementation to possibly speed it up.
+
+I opted for a two pronged approach with which I find the optimal solution in case the phase space is small dimensional, but for larger problems I use a heuristic for which I cannot prove that it's optimal. In a few hours I will have the splits ready.
