@@ -287,4 +287,7 @@ I also recalculated how many files are over our max processing limit and found a
 
 Next step: silence finder. `pydub` offers a nice way to find chunks of silence that work pretty much like the `split_on_silence`, except that it does not return audio segments themselves, but instead only the brackets where silence is identified. We can use this to calculate the silences centroids and proceed from there with the framework we already put in place the previous week.
 
-Since the longest 
+
+# Addendum 2021-12-14T09:07:18
+
+My splitter has been debugged so that it works as intended. The problem arises in certain instances, where the splitter has to split on 200ms pauses and check 2^23 combinations, which is slow at best. I'm looking at divide-and-concquer implementation to possibly speed it up.
