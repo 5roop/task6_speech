@@ -293,3 +293,5 @@ Next step: silence finder. `pydub` offers a nice way to find chunks of silence t
 My splitter has been debugged so that it works as intended. The problem arises in certain instances, where the splitter has to split on 200ms pauses and check 2^23 combinations, which is slow at best. I'm looking at divide-and-concquer implementation to possibly speed it up.
 
 I opted for a two pronged approach with which I find the optimal solution in case the phase space is small dimensional, but for larger problems I use a heuristic for which I cannot prove that it's optimal. In a few hours I will have the splits ready.
+
+During log inspection I had unfortunately found that the non-optimal faster algorithm could not find solutions for many of the larger files that would otherwise halt the execution
