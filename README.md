@@ -295,3 +295,11 @@ My splitter has been debugged so that it works as intended. The problem arises i
 I opted for a two pronged approach with which I find the optimal solution in case the phase space is small dimensional, but for larger problems I use a heuristic for which I cannot prove that it's optimal. In a few hours I will have the splits ready.
 
 During log inspection I had unfortunately found that the non-optimal faster algorithm could not find solutions for many of the larger files that would otherwise halt the execution. For these files a solution will have to be found afterwards.
+
+# Addendum 2021-12-15T08:24:01
+
+I reviewed the results from the splitting pipeline. In 82% the splitter found a good solution. In other cases, it failed, in most cases due to my non-optimal algorithm for finding the splits where a lot of silences had been identifies, which is more common on longer files.
+
+![](images/success.png)
+
+This will be remedied in the next step.
