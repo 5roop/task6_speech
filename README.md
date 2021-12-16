@@ -309,3 +309,12 @@ Still, not all files can be processed, although those cases are vastly less freq
 # Addendum 2021-12-15T12:59:07
 
 Next we shall split also the files between 10 and 20 seconds as agreed in the Skype chat. This is a bit time consuming, as the majority of recordings are precisely in this bracket, but it's less stress, because even if the algorithms fail, we are content with 20s recordings. In a few hours I'll have the data and I'll be able to analyze them some more.
+
+# Addendum 2021-12-16T08:22:48
+This repeated splitting took some time, about 7h. Still some files were pathological enough to render the splitting impossible under the constraints we required, so now the distribution of original files that could not be split looks like this:
+
+![](images/success_after_repeated_splitting.png)
+
+We can see that we get a lot of files that are too short to process, and a few longer files, that are still long enough to go in the model without any problems.
+
+The files can now be split and passed to the classifier.
