@@ -29,7 +29,7 @@ model_name = '/home/peterr/macocu/task6_speech/7_/checkpoint-5200/'
 model = Wav2Vec2ForCTC.from_pretrained(model_name).cuda()
 
 
-audio_filepath = '/home/peterr/macocu/task6_speech/data/00009874.flac.wav'
+audio_filepath = '/home/peterr/macocu/task6_speech/data/00000001.flac.wav'
 speech, sample_rate = sf.read(audio_filepath)
 input_values = processor(speech, sampling_rate=sample_rate, return_tensors="pt").input_values.cuda()
 
