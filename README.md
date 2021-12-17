@@ -318,3 +318,29 @@ This repeated splitting took some time, about 7h. Still some files were patholog
 We can see that we get a lot of files that are too short to process, and a few longer files, that are still long enough to go in the model without any problems.
 
 The files can now be split and passed to the classifier.
+
+
+Meeting notes:
+* When evaluating: use larger batches, because we now have smaller data instances
+* Word starts and word ends need not be preserved, maybe keep them for diagnostics
+* When able, publish the current model on HF MH. Put it directly to CLASSLA, make it public.
+* Next week: VM is reserved for us, retrain a new model on new dataset.
+* Tomorrow: meeting at 13? TBC
+* Nuance?, iPhone dictation tech, can we compare it to ur model?
+
+# Addendum 2021-12-17T15:45:12
+
+The splitting is done, on all chunks transcription has been performed.
+
+After splitting, the split files have the following duration distribution:
+
+![](images/durations_after_splitting.png)
+
+First words in the transcription start at different times. The distribution looks like this:
+
+![](images/first_word_start_position.png)
+
+~~This is worrying, because we might have split some words in the middle if the pauses are not long enough. Some of these instances will be checked to ascertain the danger of this happening.~~
+This was worrying, but after I used logarithmically spaced bins and not linearly spaced ones, I think the processed files being cut in the middle of the word is not such a wide spread problem.
+
+Another problem lies with two files for which the model was not able to transcribe anything at all. These instances will also be checked.
