@@ -344,3 +344,8 @@ First words in the transcription start at different times. The distribution look
 This was worrying, but after I used logarithmically spaced bins and not linearly spaced ones, I think the processed files being cut in the middle of the word is not such a wide spread problem.
 
 Another problem lies with two files for which the model was not able to transcribe anything at all. These instances will also be checked.
+
+Meeting notes:
+* Re: start word times distribution: remove from analysis all first chunks
+* Nikola will sample the files, if OK, a new model can be trained during the weekend.
+* Finetuning shall be started from the original checkpoint (`"facebook/wav2vec2-xls-r-300m"`).
