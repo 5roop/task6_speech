@@ -349,3 +349,9 @@ Meeting notes:
 * Re: start word times distribution: remove from analysis all first chunks
 * Nikola will sample the files, if OK, a new model can be trained during the weekend.
 * Finetuning shall be started from the original checkpoint (`"facebook/wav2vec2-xls-r-300m"`).
+
+# Addendum 2021-12-18T15:41:15
+
+As agreed a new training was started. Beforehand I joined the original data and the splits we performed yesterday and saved the dataset to `15_new_DS.csv`.
+
+I noticed the hard drive was completely full again, but thankfully I still had time before the model started training. I cleaned old checkpoints and secured 15GB for my work.
