@@ -355,3 +355,11 @@ Meeting notes:
 As agreed a new training was started. Beforehand I joined the original data and the splits we performed yesterday and saved the dataset to `15_new_DS.csv`.
 
 I noticed the hard drive was completely full again, but thankfully I still had time before the model started training. I cleaned old checkpoints and secured 15GB for my work.
+
+# Addendum 2021-12-20T09:30:07
+
+As it turned out the fault for the disk filling up was entirely mine. With Nikola's help I purged the `/tmp/` folder of all my files and indeed liberated an enormous chunk of the disk space.
+
+The training was started anew.
+
+Probably we will meet with Danijel Korzinek today at 14LT, with an internal pre-meeting with Nikola at 13:15LT.
