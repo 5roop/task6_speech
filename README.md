@@ -363,3 +363,6 @@ As it turned out the fault for the disk filling up was entirely mine. With Nikol
 The training was started anew.
 
 Probably we will meet with Danijel Korzinek today at 14LT, with an internal pre-meeting with Nikola at 13:15LT.
+
+The two segments that had no transcripts had been transfered to the PC and listened to. In both cases the transcripts were correct; no words are spoken in those segments. One is a 7s segment of naught but silence with faint room sound, and the other is a 7.5s long segment of roaring applause. In both cases the model was right to return no transcripts.
+
