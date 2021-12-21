@@ -414,7 +414,7 @@ Meeting notes:
 * Kaldi easier to customize (acoustic and linguistic model separated)
 * Danijel's suggestion: segment audio, run them through ASR, transcribe, get phoneme/word level transcript, segment again 
 * It is possible to assign the vocabulary to the processor to allow only legitimate croatian words 
-* Check out Gentle Forced Alignment, Silero-VAD, SpeechBrain, SailAlign
+* Check out Gentle Forced Alignment, Silero-VAD, SpeechBrain, SailAlign, BeamSearch
 * Acoustic models: output phoneme level data
 Ways forward:
 * Segmentation by silence recognition (by Danijel) 
@@ -430,6 +430,8 @@ Training  (`15_`) still going on. WER is fishy:
 
 ![](images/15_wer.png)
 
+This will have to be discussed with Domain Experts.
+
 Steps to proceed, as per TelCo with Nikola @ 11:00:
 1. check which model exactly was published at HF, is it the model#7 with WER of 0.28?
 2. let the model#15 be finetuned to completion, compare to the WER of model#7
@@ -439,4 +441,11 @@ Ad 1.: The model published to HF MH is `7_`, stopped at step 5200 instead of ste
 I can corroborate this data with the following link: [trainer_state](https://huggingface.co/classla/wav2vec2-xls-r-sabor-hr/blob/main/trainer_state.json).
 Apparently the training crashed, it was probably caused and missed due to VPN dropping.
 
+
+Meeting notes (Nikola, 13:00):
+* Evaluate model `7_` and model `15_` on the new dataset, test split
+* Then, go to training model `16_`
+* https://github.com/patrickvonplaten/Wav2Vec2_PyCTCDecode
+* https://huggingface.co/patrickvonplaten/wav2vec2-large-xlsr-53-spanish-with-lm
+* Have a look at the Beam Search
 
