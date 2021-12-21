@@ -366,3 +366,77 @@ Probably we will meet with Danijel Korzinek today at 14LT, with an internal pre-
 
 The two segments that had no transcripts had been transfered to the PC and listened to. In both cases the transcripts were correct; no words are spoken in those segments. One is a 7s segment of naught but silence with faint room sound, and the other is a 7.5s long segment of roaring applause. In both cases the model was right to return no transcripts.
 
+Possible improvement to the fuzzy logic sentence aligner: fix a Obi Wan error with gold transcripts:
+
+```python
+
+from fuzzywuzzy import fuzz
+def get_subset(gold, model_output):
+    results = list()
+    gold = gold.split(" ")
+    model_output = model_output.split(" ")
+    M = len(gold)
+    for start in range(M):
+        for end in range(M+1): #Right here. Due to python sequence addressing, a M+1 is needed here instead of M.
+            try:
+                subset = gold[start:end]
+            except IndexError:
+                continue
+            ratio = fuzz.ratio(" ".join(model_output), " ".join(subset))
+            results.append((ratio, start, end, " ".join(subset)))
+    maximum_ratio = max(results, key=lambda tup: tup[0])
+    for result in results:
+        if result[0] == maximum_ratio[0]:
+            return result[-1]
+    # return results[-1]
+    raise ValueError(f"No solutions found for {gold=}, {model_output=}")
+```
+
+# Notes for the meeting with Danijel Korzinek:
+
+> Got it. So stuff like alignment, segmentation, diarization, and boosting.
+* We do not care much for diarization.
+* Boosting would be only done insomuch as to obtain consistent audio levels
+* Alignment is to be performed after segmentation. We have the transcript that is to be aligned with the audio segment.
+
+> - we have previously used a banale method of fitting long transcripts into the GPU by simply discarding the part of every recording longer than N seconds, do you have any idea how robust XLS-R (or kaldi) is on bad trimmings, non-exact transcripts and excess transcripts?
+> I understand this is a limitation in many E2E models. The answer is to segment the audio beforehand using VAD and diarization
+* E2E: end to end? Yes.
+* VAD?: voice activity detection, classification of speech vs other sounds
+* We did not research using a model to align the transcript, but we did extract temporal data from the model transcripts and believe we can use them alongisde the gold transcripts to bit-bang the segment transcription, as well as use them to identify suitable pauses in the speech to segment the original audio into smaller segments.
+
+Pre-meeting notes:
+* What's going on with the nr of steps? We have batch size of 16, 30 epochs, 2x as much data but 2x the batch size
+* Answer: it checks out. We have steps accumulating turned to 4, meaning that the efective size is 64.
+  
+
+Meeting notes:
+* Kaldi easier to customize (acoustic and linguistic model separated)
+* Danijel's suggestion: segment audio, run them through ASR, transcribe, get phoneme/word level transcript, segment again 
+* It is possible to assign the vocabulary to the processor to allow only legitimate croatian words 
+* Check out Gentle Forced Alignment, Silero-VAD, SpeechBrain, SailAlign
+* Acoustic models: output phoneme level data
+Ways forward:
+* Segmentation by silence recognition (by Danijel) 
+* Transcript alignment, feat Daniel
+
+TODO:
+* Does smaller datasets fit in the GPU without trimming? Investigate
+
+
+# Addendum 2021-12-21T12:55:18
+
+Training  (`15_`) still going on. WER is fishy:
+
+![](images/15_wer.png)
+
+Steps to proceed, as per TelCo with Nikola @ 11:00:
+1. check which model exactly was published at HF, is it the model#7 with WER of 0.28?
+2. let the model#15 be finetuned to completion, compare to the WER of model#7
+3. do model#16, but just for 8 epochs
+
+Ad 1.: The model published to HF MH is `7_`, stopped at step 5200 instead of step 7500. The last WER reported is 0.28.
+I can corroborate this data with the following link: [trainer_state](https://huggingface.co/classla/wav2vec2-xls-r-sabor-hr/blob/main/trainer_state.json).
+Apparently the training crashed, it was probably caused and missed due to VPN dropping.
+
+
