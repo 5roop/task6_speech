@@ -449,3 +449,10 @@ Meeting notes (Nikola, 13:00):
 * https://huggingface.co/patrickvonplaten/wav2vec2-large-xlsr-53-spanish-with-lm
 * Have a look at the Beam Search
 
+
+
+# Addendum 2021-12-21T21:35:05
+
+Training on model `15_` is finished. WANDB reports WER to be around 0.2. I evaluated it on test split, evaluated the published model `7_` as well, and published the data as a csv in this repo (code: `task6_speech/15_2_evaluating_models.ipynb`, evaluation data: `task6_speech/15_comparison_of_models.csv`)
+
+As agreed in the last meeting @13:00, a new training session has been started with same parameters, except for only 8 epochs. Preliminary estimations show it should take about 7h to run. Join me in the proverbial fingercrossing, as I do not plan to supervise it during the night. 
