@@ -456,3 +456,16 @@ Meeting notes (Nikola, 13:00):
 Training on model `15_` is finished. WANDB reports WER to be around 0.2. I evaluated it on test split, evaluated the published model `7_` as well, and published the data as a csv in this repo (code: `task6_speech/15_2_evaluating_models.ipynb`, evaluation data: `task6_speech/15_comparison_of_models.csv`)
 
 As agreed in the last meeting @13:00, a new training session has been started with same parameters, except for only 8 epochs. Preliminary estimations show it should take about 7h to run. Join me in the proverbial fingercrossing, as I do not plan to supervise it during the night. 
+
+# Addendum 2021-12-22T10:39:08
+
+The training of the model `16_` went as planned, thanks for the crossed fingers. I repeated the transcripting on the last 5k instances of the test split, alongside the other two models. On transcriptions, a WER and CER metrics were calculated. The results look like this:
+
+|     |   15_/checkpoint-13600 |   classla/wav2vec2-xls-r-sabor-hr |   16_/checkpoint-3600 |
+|:----|-----------------------:|----------------------------------:|----------------------:|
+| cer |              0.0684569 |                         0.0754986 |             0.0455718 |
+| wer |              0.2201    |                         0.26807   |             0.136825  |
+
+
+After Nikola's inspection of the transcripts (`task6_speech/16_comparison_of_models.csv`), I got a go-ahead to publish under the same name as before.
+
