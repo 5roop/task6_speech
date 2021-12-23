@@ -469,3 +469,7 @@ The training of the model `16_` went as planned, thanks for the crossed fingers.
 
 After Nikola's inspection of the transcripts (`task6_speech/16_comparison_of_models.csv`), I got a go-ahead to publish under the same name as before.
 
+
+
+# Addendum 2021-12-23T08:24:48
+As agreed upon in a skype chat, the model was renamed to `classla/wav2vec2-xls-r-parlaspeech-hr`. I will now also add some training hyperparameters in the readme to assist others with the optimization.
